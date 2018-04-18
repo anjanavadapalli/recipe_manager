@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cookbook.recipe.manager.dao.RecipeDao;
 import com.cookbook.recipe.manager.model.Recipe;
@@ -15,13 +16,17 @@ public class RecipeServiceImpl implements IRecipeService {
     @Autowired
     private RecipeDao recipeDao;
 
+    private final Recipe recipe = new Recipe();
+
     @Override
+    @Transactional
     public List<Recipe> createRecipe(final List<Recipe> recipes) {
 
         return recipeDao.save(recipes);
     }
 
     @Override
+    @Transactional
     public List<Recipe> getAllRecipes() {
 
         return recipeDao.getAll();
