@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cookbook.recipe.manager.model.Recipe;
@@ -14,6 +15,9 @@ import com.cookbook.recipe.manager.model.Recipe;
 public class RecipeDao {
 
     private static final Map<String, Recipe> RECIPE_REPO = new HashMap<>();
+
+    @Autowired
+    private SessionFactory sessionFactory;
 
     static {
         final Recipe recipe1 = new Recipe(UUID.randomUUID().toString(), "Biryani", 1, 30, "Ask vahchef");
@@ -26,8 +30,10 @@ public class RecipeDao {
 
         for (final Recipe recipe : recipes) {
             synchronized (this) {
-                recipe.setId(UUID.randomUUID().toString());
-                RECIPE_REPO.put(recipe.getId(), recipe);
+
+                this.sessionFactory.getCurrentSession().save(recipe);
+                // recipe.setId(UUID.randomUUID().toString());
+                // RECIPE_REPO.put(recipe.getId(), recipe);
             }
 
         }
@@ -36,6 +42,9 @@ public class RecipeDao {
     }
 
     public List<Recipe> getAll() {
-        return RECIPE_REPO.values().stream().collect(Collectors.toList());
+
+        final List<Recipe> recipes = this.sessionFactory.getCurrentSession().createQuery("from recipes").list();
+        return recipes;
+        // return RECIPE_REPO.values().stream().collect(Collectors.toList());
     }
 }

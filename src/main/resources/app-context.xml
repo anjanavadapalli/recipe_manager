@@ -10,5 +10,20 @@
 
 	<context:component-scan base-package="com.cookbook.recipe"/>
 	<context:annotation-config />  
-
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation">
+			<value>/hibernate-cfg.xml</value>
+		</property>
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.AnnotationConfiguration</value>
+		</property>
+		<property name="hibernateproperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.showsql">true</prop>
+			</props>
+		
+		</property>
+	</bean>
 </beans>
