@@ -1,6 +1,7 @@
 package com.cookbook.recipe.manager.repo;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -27,19 +28,18 @@ public class RecipeRepo extends AbstractRepo implements IRecipeRepo {
         // final List<Recipe> persistedRecipes = new ArrayList<>();
         try {
             for (final Recipe recipe : recipes) {
-
-                getSession().save(recipe);
-                // System.out.println(identifier);
-                // persistedRecipes.add(persistedRecipe);
-                // recipe.setId(UUID.randomUUID().toString());
-                // RECIPE_REPO.put(recipe.getId(), recipe);
+                recipe.setId(UUID.randomUUID().toString());
+                final int identifier = (int) getSession().save(recipe);
+                if (identifier != 0) {
+                    return recipes;
+                }
 
             }
         } catch (final Exception e) {
             throw new PersistenceException("Failed to persist recipes", e);
         }
-        return recipes;
 
+        return null;
     }
 
     @Override

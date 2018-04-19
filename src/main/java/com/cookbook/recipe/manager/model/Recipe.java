@@ -15,7 +15,7 @@ public class Recipe implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
-    private long id;
+    private String id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -34,7 +34,7 @@ public class Recipe implements Serializable {
 
     // HashMap<String, Double> ingredients_Quantity = new HashMap<String, Double>();
 
-    public Recipe(final long id, final String name, final int servings, final int prepDurationMins, final String directions) {
+    public Recipe(final String id, final String name, final int servings, final int prepDurationMins, final String directions) {
         super();
         this.id = id;
         this.name = name;
@@ -47,11 +47,11 @@ public class Recipe implements Serializable {
         super();
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(final long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
