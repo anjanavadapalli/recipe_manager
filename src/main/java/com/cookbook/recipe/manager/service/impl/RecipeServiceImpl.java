@@ -4,32 +4,29 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.cookbook.recipe.manager.dao.RecipeDao;
+import com.cookbook.recipe.exception.PersistenceException;
+import com.cookbook.recipe.exception.ValidationException;
 import com.cookbook.recipe.manager.model.Recipe;
+import com.cookbook.recipe.manager.repo.IRecipeRepo;
 import com.cookbook.recipe.manager.service.IRecipeService;
 
 @Component
 public class RecipeServiceImpl implements IRecipeService {
 
     @Autowired
-    private RecipeDao recipeDao;
-
-    private final Recipe recipe = new Recipe();
+    private IRecipeRepo recipeRepo;
 
     @Override
-    @Transactional
-    public List<Recipe> createRecipe(final List<Recipe> recipes) {
+    public List<Recipe> createRecipe(final List<Recipe> recipes) throws ValidationException, PersistenceException {
 
-        return recipeDao.save(recipes);
+        return recipeRepo.save(recipes);
     }
 
     @Override
-    @Transactional
-    public List<Recipe> getAllRecipes() {
+    public List<Recipe> getAllRecipes() throws PersistenceException {
 
-        return recipeDao.getAll();
+        return recipeRepo.getAll();
     }
 
     @Override

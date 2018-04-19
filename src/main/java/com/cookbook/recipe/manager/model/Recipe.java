@@ -1,36 +1,40 @@
 package com.cookbook.recipe.manager.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "recipes")
 @Entity
-public class Recipe {
+@Table(name = "recipe")
+public class Recipe implements Serializable {
+
+    private static final long serialVersionUID = 164805050912765327L;
 
     @Id
     @Column(name = "id", nullable = false)
-    private String id;
+    private long id;
 
-    @Column(name = "Name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "servings", nullable = false)
     private int servings;
 
-    @Column(name = "prepDuration", nullable = false)
+    @Column(name = "prep_duration", nullable = false)
     private int prepDurationMins;
 
     @Column(name = "directions", nullable = false)
     private String directions;
 
-    @Column(name = "imageURL", nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageId;
 
     // HashMap<String, Double> ingredients_Quantity = new HashMap<String, Double>();
 
-    public Recipe(final String id, final String name, final int servings, final int prepDurationMins, final String directions) {
+    public Recipe(final long id, final String name, final int servings, final int prepDurationMins, final String directions) {
         super();
         this.id = id;
         this.name = name;
@@ -43,11 +47,11 @@ public class Recipe {
         super();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(final String id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
