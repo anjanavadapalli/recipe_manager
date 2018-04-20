@@ -1,17 +1,35 @@
 package com.cookbook.recipe.manager.model;
 
-public class Recipe {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "recipe")
+public class Recipe implements Serializable {
+
+    private static final long serialVersionUID = 164805050912765327L;
+
+    @Id
+    @Column(name = "id", nullable = false)
     private String id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "servings", nullable = false)
     private int servings;
 
+    @Column(name = "prep_duration", nullable = false)
     private int prepDurationMins;
 
+    @Column(name = "directions", nullable = false)
     private String directions;
 
+    @Column(name = "image_url", nullable = false)
     private String imageId;
 
     // HashMap<String, Double> ingredients_Quantity = new HashMap<String, Double>();
@@ -76,4 +94,5 @@ public class Recipe {
     public void setImageId(final String imageId) {
         this.imageId = imageId;
     }
+
 }
